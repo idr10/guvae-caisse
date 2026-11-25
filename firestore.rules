@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Seuls les 2 comptes de la liste peuvent lire et écrire.
+    // Remplacez les adresses par celles créées dans Authentication.
+    function autorise() {
+      return request.auth != null
+        && request.auth.token.email in ['oussama@guvae.app', 'othman@guvae.app'];
+    }
+    match /ops/{id} {
+      allow read, delete: if autorise();
+      allow create: if autorise()
+        && request.resource.data.type in ['in', 'out']
+        && request.resource.data.montant is number
+        && request.resource.data.montant > 0
+        && request.resource.data.uid == request.auth.uid;
+      allow update: if false;
+    }
+  }
+}

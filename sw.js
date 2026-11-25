@@ -1,5 +1,5 @@
-const CACHE = 'guvae-v3';
-const FILES = ['./', './index.html', './manifest.webmanifest', './icon.svg'];
+const CACHE = 'guvae-v4';
+const FILES = ['./', './index.html', './config.js', './manifest.webmanifest', './icon.svg'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
@@ -9,9 +9,13 @@ self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))));
   self.clients.claim();
 });
-// Réseau d'abord, cache si hors ligne
+// Réseau d'abord, cache si hors ligne — seulement pour les fichiers de l'app.
+// Les requêtes vers Firebase (serveur) ne passent jamais par ce cache.
 self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
+  const url = new URL(e.request.url);
+  const sameOrigin = url.origin === self.location.origin;
+  const sdk = url.hostname === 'www.gstatic.com' && url.pathname.startsWith('/firebasejs/');
+  if (e.request.method !== 'GET' || !(sameOrigin || sdk)) return;
   e.respondWith(
     fetch(e.request).then(r => {
       const copy = r.clone();
