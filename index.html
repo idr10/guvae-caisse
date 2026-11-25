@@ -116,7 +116,7 @@ nav button.on svg{stroke:var(--accent)}
 .field:focus{border-color:var(--accent)}
 .mlabel{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 10px}
 .motifs{display:grid;grid-template-columns:repeat(var(--n,3),1fr);gap:8px}
-.motifs button{height:46px;border:1px solid var(--line);border-radius:40px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text);transition:background .15s,color .15s,border-color .15s,transform .1s}
+.motifs button{height:46px;padding:0 6px;border:1px solid var(--line);border-radius:40px;font-size:12px;font-weight:600;letter-spacing:.05em;white-space:nowrap;text-transform:uppercase;color:var(--text);transition:background .15s,color .15s,border-color .15s,transform .1s}
 .motifs button:active{transform:scale(.97)}
 .motifs button.on{background:var(--text);border-color:var(--text);color:#fff}
 #fMotif{margin-top:10px}
@@ -412,12 +412,12 @@ function openSheet(t) {
 function closeSheet() { $('scrim').classList.remove('open'); $('sheet').classList.remove('open'); document.activeElement.blur(); }
 document.querySelectorAll('[data-add]').forEach(b => b.onclick = () => openSheet(b.dataset.add));
 $('scrim').onclick = closeSheet; $('cancel').onclick = closeSheet;
-// Suggestions : entrée → SENDIT ; sortie → ADS, Sal3a (avec précision) ; toujours « Autre » pour écrire
+// Suggestions : entrée → SENDIT ; sortie → ADS, Marchandise (avec précision) ; toujours « Autre » pour écrire
 const MOTIFS = {
   in: [['SENDIT', 'SENDIT'], ['autre', 'Autre']],
-  out: [['ADS', 'ADS'], ['sal3a', 'Sal3a'], ['autre', 'Autre']]
+  out: [['ADS', 'ADS'], ['sal3a', 'Marchandise'], ['autre', 'Autre']]
 };
-const SAL3A = 'Sal3a';
+const SAL3A = 'Marchandise';
 const needsText = m => m === 'autre' || m === 'sal3a';
 let motifSel = null;
 function pickMotif(m, focus = true) {
@@ -427,7 +427,7 @@ function pickMotif(m, focus = true) {
   f.classList.toggle('hidden', !needsText(m));
   if (needsText(m)) {
     f.value = '';
-    f.placeholder = m === 'sal3a' ? 'Chno had sal3a ? (toub, jeld, carton…)' : 'Écrire le motif…';
+    f.placeholder = m === 'sal3a' ? 'Quelle marchandise ? (toub, jeld, carton…)' : 'Écrire le motif…';
     // propositions : ce qui a déjà été écrit avant
     const prev = m === 'sal3a'
       ? ops.filter(o => o.type === 'out' && String(o.motif || '').startsWith(SAL3A + ' · ')).map(o => o.motif.slice(SAL3A.length + 3))
@@ -446,7 +446,7 @@ $('fSave').onclick = () => {
   const montant = parseFloat($('fAmount').value),
     motif = motifSel === 'autre' ? txt : motifSel === 'sal3a' ? (txt ? `${SAL3A} · ${txt}` : '') : (motifSel || '');
   if (!(montant > 0)) { haptic(); return $('ferr').textContent = 'Entrez un montant.'; }
-  if (!motif) { haptic(); return $('ferr').textContent = motifSel === 'sal3a' ? 'Écrivez chno had sal3a.' : motifSel === 'autre' ? 'Écrivez le motif.' : 'Choisissez un motif.'; }
+  if (!motif) { haptic(); return $('ferr').textContent = motifSel === 'sal3a' ? 'Écrivez la marchandise.' : motifSel === 'autre' ? 'Écrivez le motif.' : 'Choisissez un motif.'; }
   // Pas d'await : Firestore garde l'écriture en local et l'envoie dès qu'il y a internet
   F.addDoc(opsCol, { type: mode, montant, motif, date: today(), ts: Date.now(), user: nameOf(me), uid: me.uid })
     .catch(err => toast(err.code === 'permission-denied' ? 'Accès refusé par le serveur' : 'Erreur d’enregistrement'));
