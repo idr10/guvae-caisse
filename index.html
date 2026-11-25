@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#121216">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="guvae">
+<meta name="robots" content="noindex, nofollow">
+<title>Guvae Caisse</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --soft:#f4f4f4; --card:#ffffff; --text:#121216; --muted:#6b6b6b; --line:#e2e2e2;
+  --brand:#121216; --brand-ink:#ffffff; --accent:#b4693a; --taupe:#ad9484; --sand:#efe6dc;
+  --in:#2f6b4c; --in-bg:#e6efe8; --out:#b4693a; --out-bg:#f6e9e0;
+  --serif:"the season","DM Serif Display",Georgia,serif; --sans:"futura-pt","Jost",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#121216; --soft:#1c1c21; --card:#18181d; --text:#f3eee8; --muted:#a39d96; --line:#2c2c33;
+    --brand:#f3eee8; --brand-ink:#121216; --accent:#d08a5c; --taupe:#ad9484; --sand:#26221f;
+    --in:#8cc4a2; --in-bg:#1c2a22; --out:#d99a70; --out-bg:#2e2119; }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.6 var(--sans)}
+body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+.topbar{background:#121216;color:#fff;font-size:11px;letter-spacing:.15em;text-transform:uppercase;text-align:center;padding:7px 16px}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+header .logo-img{height:26px;display:block}
+.dark-only{display:none!important}
+@media (prefers-color-scheme: dark){ .light-only{display:none!important} .dark-only{display:block!important} }
+.wordmark{font-family:var(--serif);font-size:26px;letter-spacing:.02em;margin:0}
+header .who{font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+main{max-width:640px;margin:0 auto;padding:18px 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--soft);border-radius:4px;padding:14px}
+.stat .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.2em;font-weight:500}
+.stat .v{font-size:21px;font-weight:500;margin-top:4px;font-variant-numeric:tabular-nums}
+.stat.big{grid-column:1/-1;background:var(--sand);padding:20px}
+.stat.big .l{color:var(--accent);font-weight:600}
+.stat.big .v{font-family:var(--serif);font-size:38px;font-weight:400;line-height:1.2}
+.in{color:var(--in)} .out{color:var(--out)}
+label{display:block;font-size:11px;color:var(--muted);margin:14px 0 6px;text-transform:uppercase;letter-spacing:.15em;font-weight:500}
+input,select,textarea{width:100%;height:50px;padding:0 14px;border:1px solid var(--line);border-radius:5px;background:var(--soft);color:var(--text);font:inherit}
+input:focus,select:focus{outline:1px solid var(--accent);border-color:var(--accent)}
+.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}
+button{font:inherit;border:0;cursor:pointer}
+.btn{display:block;width:100%;margin-top:18px;background:var(--brand);color:var(--brand-ink);border:1px solid var(--brand);border-radius:40px;padding:16px 24px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:background .2s,color .2s}
+.btn:active{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.out-b{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.seg{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.seg button{background:transparent;border:1px solid var(--line);border-radius:40px;color:var(--text);padding:7px 11px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+.seg button.on{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav button{flex:1;background:none;color:var(--muted);padding:10px 2px 8px;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+nav button svg{display:block;margin:0 auto 3px;width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5}
+nav button.on{color:var(--accent);font-weight:600}
+.item{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:0}
+.item .m{font-weight:500;white-space:nowrap;font-variant-numeric:tabular-nums}
+.item .d{font-size:13px;color:var(--muted)}
+.item .del{background:none;color:var(--muted);padding:4px 0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;text-decoration:underline}
+.empty{color:var(--muted);text-align:center;padding:20px 0}
+.hint{font-size:13px;color:var(--muted)}
+.err{color:#ec523e;font-size:14px;min-height:20px;margin-top:8px}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#121216;color:#fff;padding:10px 18px;border-radius:40px;font-size:13px;letter-spacing:.05em;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20}
+.toast.show{opacity:1}
+.hidden{display:none!important}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;
+  background:linear-gradient(115deg,#d9c6ae 0%,#efe3d3 30%,#cdb595 31%,#e8d9c4 55%,#c9ae8b 56%,#ead9c2 80%,#d4bc9c 100%)}
+.login .card{width:100%;max-width:380px;border:0;box-shadow:0 20px 60px rgba(18,18,22,.15)}
+.login .wordmark{text-align:center;font-size:44px}
+.tag{text-align:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 6px}
+h2{margin:0 0 6px;font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.3}
+.sub{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 2px}
+.pill{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:40px;margin-left:6px;vertical-align:middle}
+.pill.in{background:var(--in-bg)}.pill.out{background:var(--out-bg)}
+</style>
+</head>
+<body>
+
+<!-- ============ SETUP (awel mra) ============ -->
+<section id="setup" class="login hidden">
+  <div class="card">
+    <p class="tag">Gestion de caisse</p><p class="wordmark">Guvae</p>
+    <p class="hint" style="text-align:center">Awel mra: dkhel smiya o mot de passe dyal 2 users.</p>
+    <h2 style="margin-top:14px">User 1</h2>
+    <input id="su1" placeholder="Smiya" autocomplete="off">
+    <input id="sp1" type="password" placeholder="Mot de passe" style="margin-top:8px">
+    <h2 style="margin-top:14px">User 2</h2>
+    <input id="su2" placeholder="Smiya" autocomplete="off">
+    <input id="sp2" type="password" placeholder="Mot de passe" style="margin-top:8px">
+    <div class="err" id="serr"></div>
+    <button class="btn" id="setupBtn">Enregistrer</button>
+  </div>
+</section>
+
+<!-- ============ LOGIN ============ -->
+<section id="login" class="login hidden">
+  <div class="card">
+    <p class="tag">Gestion de caisse</p><p class="wordmark">Guvae</p>
+    <label>Utilisateur</label>
+    <select id="lu"></select>
+    <label>Mot de passe</label>
+    <input id="lp" type="password" autocomplete="current-password">
+    <div class="err" id="lerr"></div>
+    <button class="btn" id="loginBtn">Dkhol</button>
+  </div>
+</section>
+
+<!-- ============ APP ============ -->
+<div id="app" class="hidden">
+  <div class="topbar">Portez votre histoire</div>
+  <header>
+    <img class="logo-img light-only" src="https://guvae.com/cdn/shop/files/Guvae_logosite.png?width=280" alt="Guvae" onerror="this.replaceWith(Object.assign(document.createElement('p'),{className:'wordmark',textContent:'Guvae'}))">
+    <img class="logo-img dark-only" src="https://guvae.com/cdn/shop/files/Guvae_logo_white.png?width=280" alt="Guvae" onerror="this.replaceWith(Object.assign(document.createElement('p'),{className:'wordmark',textContent:'Guvae'}))">
+    <span class="who" id="who"></span>
+  </header>
+  <main>
+
+    <!-- Tableau de bord -->
+    <section id="v-home">
+      <div class="seg" id="period">
+        <button data-p="day">Lyoum</button>
+        <button data-p="week">7 jours</button>
+        <button data-p="month" class="on">Had chhar</button>
+        <button data-p="all">Kolchi</button>
+      </div>
+      <div class="grid">
+        <div class="stat big"><div class="l">Solde (baqi f caisse)</div><div class="v" id="sSolde">0 DH</div></div>
+        <div class="stat"><div class="l">Entrées</div><div class="v in" id="sIn">0</div></div>
+        <div class="stat"><div class="l">Sorties</div><div class="v out" id="sOut">0</div></div>
+        <div class="stat"><div class="l">Sacs tba3o</div><div class="v" id="sSacs">0</div></div>
+        <div class="stat"><div class="l">Moyenne / sac</div><div class="v" id="sAvg">—</div></div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h2>Sacs 3la 7sab l'produit</h2>
+        <div id="byProd"></div>
+      </div>
+      <div class="card">
+        <h2>Akhir l'opérations</h2>
+        <div id="recent"></div>
+      </div>
+    </section>
+
+    <!-- Entrée -->
+    <section id="v-in" class="hidden">
+      <div class="card">
+        <p class="sub">Entrée</p><h2>Flos dkhlat</h2>
+        <label>Date</label>
+        <input id="iDate" type="date">
+        <label>Motif (mnin jat)</label>
+        <input id="iMotif" list="motifsIn" placeholder="ex: Bi3 sacs, client Ahmed...">
+        <datalist id="motifsIn"></datalist>
+        <label>Produit</label>
+        <input id="iProd" list="prods" placeholder="ex: Sac Tote, Sac Bandoulière...">
+        <datalist id="prods"></datalist>
+        <div class="row">
+          <div><label>Nombre de sacs</label><input id="iSacs" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div>
+          <div><label>Prix / sac (DH)</label><input id="iPrix" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0"></div>
+        </div>
+        <label>Montant total (DH)</label>
+        <input id="iMontant" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0">
+        <p class="hint">Ila dkhlti sacs o prix, l'montant kayt7seb wa7do. T9der tbdlo.</p>
+        <label>Note (ikhtiyari)</label>
+        <input id="iNote">
+        <div class="err" id="ierr"></div>
+        <button class="btn in-b" id="saveIn">Enregistrer l'entrée</button>
+      </div>
+    </section>
+
+    <!-- Sortie -->
+    <section id="v-out" class="hidden">
+      <div class="card">
+        <p class="sub">Sortie</p><h2>Flos khrjat</h2>
+        <label>Date</label>
+        <input id="oDate" type="date">
+        <label>Motif (3lach khrjat)</label>
+        <input id="oMotif" list="motifsOut" placeholder="ex: Chri sel3a, livraison, pub...">
+        <datalist id="motifsOut"></datalist>
+        <label>Montant (DH)</label>
+        <input id="oMontant" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0">
+        <label>Note (ikhtiyari)</label>
+        <input id="oNote">
+        <label>Confirmer b mot de passe dyalek</label>
+        <input id="oPass" type="password" autocomplete="current-password">
+        <div class="err" id="oerr"></div>
+        <button class="btn out-b" id="saveOut">Enregistrer la sortie</button>
+        <p class="hint">Kat tsjjel b smiyt: <b id="oWho"></b></p>
+      </div>
+    </section>
+
+    <!-- Historique -->
+    <section id="v-hist" class="hidden">
+      <div class="seg" id="hFilter">
+        <button data-f="all" class="on">Kolchi</button>
+        <button data-f="in">Entrées</button>
+        <button data-f="out">Sorties</button>
+      </div>
+      <div class="row" style="margin-bottom:12px">
+        <input id="hFrom" type="date" title="Mn">
+        <input id="hTo" type="date" title="7ta">
+      </div>
+      <div class="card"><div id="hist"></div></div>
+    </section>
+
+    <!-- Réglages -->
+    <section id="v-set" class="hidden">
+      <div class="card">
+        <h2>Bdel mot de passe</h2>
+        <label>Mot de passe l9dim</label><input id="cOld" type="password">
+        <label>Mot de passe jdid</label><input id="cNew" type="password">
+        <div class="err" id="cerr"></div>
+        <button class="btn" id="chgPass">Bdel</button>
+      </div>
+      <div class="card">
+        <h2>Sauvegarde</h2>
+        <p class="hint">Lbyanat kayb9aw ghir f had telephone. Dir sauvegarde mn wqt l wqt.</p>
+        <button class="btn ghost" id="expCsv">Exporter Excel (CSV)</button>
+        <button class="btn ghost" id="expJson">Sauvegarder (fichier .json)</button>
+        <button class="btn ghost" id="impJson">Restaurer mn fichier</button>
+        <input id="impFile" type="file" accept=".json,application/json" class="hidden">
+      </div>
+      <button class="btn ghost" id="logout">Khrej (déconnexion)</button>
+    </section>
+
+  </main>
+  <nav>
+    <button data-v="home" class="on"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9H3z"/></svg>Accueil</button>
+    <button data-v="in"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Entrée</button>
+    <button data-v="out"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>Sortie</button>
+    <button data-v="hist"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Historique</button>
+    <button data-v="set"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>Compte</button>
+  </nav>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(() => {
+  const KEY = 'guvae-data-v1';
+  const $ = id => document.getElementById(id);
+  const fmt = n => (Math.round(n * 100) / 100).toLocaleString('fr-FR', {minimumFractionDigits: 0, maximumFractionDigits: 2});
+  const dh = n => fmt(n) + ' DH';
+  const today = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); };
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+  // ---------- stockage ----------
+  let db;
+  function load() {
+    try { db = JSON.parse(localStorage.getItem(KEY)) || null; } catch { db = null; }
+    if (!db) db = { users: [], ops: [] };
+  }
+  function save() { localStorage.setItem(KEY, JSON.stringify(db)); }
+
+  // ---------- mot de passe (haché) ----------
+  async function hash(pw, salt) {
+    const data = new TextEncoder().encode(salt + ':' + pw);
+    if (crypto.subtle) {
+      const buf = await crypto.subtle.digest('SHA-256', data);
+      return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+    let h = 2166136261; for (const b of data) { h ^= b; h = Math.imul(h, 16777619); } return 'f' + (h >>> 0).toString(16);
+  }
+  async function checkPass(user, pw) { return user && (await hash(pw, user.salt)) === user.hash; }
+
+  let me = null;
+  const toast = msg => { const t = $('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 1800); };
+
+  function show(id) { ['setup', 'login', 'app'].forEach(x => $(x).classList.toggle('hidden', x !== id)); }
+
+  // ---------- setup ----------
+  $('setupBtn').onclick = async () => {
+    const u = [[$('su1').value.trim(), $('sp1').value], [$('su2').value.trim(), $('sp2').value]];
+    if (u.some(([n, p]) => !n || p.length < 4)) return $('serr').textContent = 'Khas smiya o mot de passe (4 7orof 3la l9al) l kol user.';
+    if (u[0][0].toLowerCase() === u[1][0].toLowerCase()) return $('serr').textContent = 'Smiyat khashom ikono mkhtalfin.';
+    db.users = [];
+    for (const [name, pw] of u) { const salt = uid(); db.users.push({ id: uid(), name, salt, hash: await hash(pw, salt) }); }
+    save(); toast('Users tsajlo ✔'); startLogin();
+  };
+
+  // ---------- login ----------
+  function startLogin() {
+    $('lu').innerHTML = db.users.map(u => `<option value="${u.id}">${esc(u.name)}</option>`).join('');
+    $('lp').value = ''; $('lerr').textContent = '';
+    show('login'); setTimeout(() => $('lp').focus(), 50);
+  }
+  async function doLogin() {
+    const u = db.users.find(x => x.id === $('lu').value);
+    if (!(await checkPass(u, $('lp').value))) return $('lerr').textContent = 'Mot de passe ghalat.';
+    me = u; sessionStorage.setItem('guvae-me', u.id); enterApp();
+  }
+  $('loginBtn').onclick = doLogin;
+  $('lp').onkeydown = e => { if (e.key === 'Enter') doLogin(); };
+
+  function enterApp() {
+    $('who').textContent = me.name; $('oWho').textContent = me.name;
+    show('app'); go('home');
+  }
+
+  // ---------- navigation ----------
+  function go(v) {
+    document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+    ['home', 'in', 'out', 'hist', 'set'].forEach(x => $('v-' + x).classList.toggle('hidden', x !== v));
+    if (v === 'home') renderHome();
+    if (v === 'in') resetIn();
+    if (v === 'out') resetOut();
+    if (v === 'hist') renderHist();
+    window.scrollTo(0, 0);
+  }
+  document.querySelectorAll('nav button').forEach(b => b.onclick = () => go(b.dataset.v));
+
+  // ---------- helpers ----------
+  const userName = id => (db.users.find(u => u.id === id) || {}).name || '?';
+  function fillLists() {
+    const uniq = arr => [...new Set(arr.filter(Boolean))].sort();
+    $('motifsIn').innerHTML = uniq(db.ops.filter(o => o.type === 'in').map(o => o.motif)).map(m => `<option value="${esc(m)}">`).join('');
+    $('motifsOut').innerHTML = uniq(db.ops.filter(o => o.type === 'out').map(o => o.motif)).map(m => `<option value="${esc(m)}">`).join('');
+    $('prods').innerHTML = uniq(db.ops.map(o => o.produit)).map(m => `<option value="${esc(m)}">`).join('');
+  }
+  function itemHtml(o, canDelete) {
+    const isIn = o.type === 'in';
+    const sub = [o.date, isIn && o.sacs ? `${o.sacs} sacs${o.produit ? ' ' + esc(o.produit) : ''}${o.prix ? ' × ' + fmt(o.prix) : ''}` : '', 'par ' + esc(userName(o.user)), o.note ? esc(o.note) : ''].filter(Boolean).join(' · ');
+    return `<div class="item"><div><div>${esc(o.motif || (isIn ? 'Entrée' : 'Sortie'))}<span class="pill ${o.type}">${isIn ? 'entrée' : 'sortie'}</span></div><div class="d">${sub}</div></div>
+      <div style="text-align:right"><div class="m ${o.type}">${isIn ? '+' : '−'}${dh(o.montant)}</div>${canDelete ? `<button class="del" data-del="${o.id}">supprimer</button>` : ''}</div></div>`;
+  }
+  const sorted = ops => [...ops].sort((a, b) => (b.date + b.ts).localeCompare(a.date + a.ts));
+
+  // ---------- accueil ----------
+  let period = 'month';
+  document.querySelectorAll('#period button').forEach(b => b.onclick = () => {
+    period = b.dataset.p; document.querySelectorAll('#period button').forEach(x => x.classList.toggle('on', x === b)); renderHome();
+  });
+  function inPeriod(o) {
+    if (period === 'all') return true;
+    const t = today();
+    if (period === 'day') return o.date === t;
+    if (period === 'month') return o.date.slice(0, 7) === t.slice(0, 7);
+    const d = new Date(t); d.setDate(d.getDate() - 6); return o.date >= d.toISOString().slice(0, 10);
+  }
+  function renderHome() {
+    const all = db.ops;
+    const solde = all.reduce((s, o) => s + (o.type === 'in' ? o.montant : -o.montant), 0);
+    const ops = all.filter(inPeriod);
+    const tin = ops.filter(o => o.type === 'in').reduce((s, o) => s + o.montant, 0);
+    const tout = ops.filter(o => o.type === 'out').reduce((s, o) => s + o.montant, 0);
+    const sacsOps = ops.filter(o => o.type === 'in' && o.sacs > 0);
+    const sacs = sacsOps.reduce((s, o) => s + o.sacs, 0);
+    const sacsMoney = sacsOps.reduce((s, o) => s + o.montant, 0);
+    $('sSolde').textContent = dh(solde); $('sSolde').className = 'v ' + (solde < 0 ? 'out' : '');
+    $('sIn').textContent = dh(tin); $('sOut').textContent = dh(tout);
+    $('sSacs').textContent = fmt(sacs);
+    $('sAvg').textContent = sacs ? dh(sacsMoney / sacs) : '—';
+    const by = {};
+    sacsOps.forEach(o => { const k = o.produit || 'Bla produit'; by[k] = by[k] || { s: 0, m: 0 }; by[k].s += o.sacs; by[k].m += o.montant; });
+    const keys = Object.keys(by).sort((a, b) => by[b].s - by[a].s);
+    $('byProd').innerHTML = keys.length ? keys.map(k => `<div class="item"><div>${esc(k)}<div class="d">${dh(by[k].m)}</div></div><div class="m">${fmt(by[k].s)} sacs</div></div>`).join('') : '<div class="empty">Ma tba3 7ta sac f had l\'période.</div>';
+    const rec = sorted(all).slice(0, 6);
+    $('recent').innerHTML = rec.length ? rec.map(o => itemHtml(o, false)).join('') : '<div class="empty">Mazal ma kayn 7ta opération.</div>';
+  }
+
+  // ---------- entrée ----------
+  function resetIn() {
+    fillLists();
+    $('iDate').value = today(); ['iMotif', 'iProd', 'iSacs', 'iPrix', 'iMontant', 'iNote'].forEach(i => $(i).value = ''); $('ierr').textContent = '';
+  }
+  const autoMontant = () => {
+    const s = parseFloat($('iSacs').value), p = parseFloat($('iPrix').value);
+    if (s > 0 && p > 0) $('iMontant').value = Math.round(s * p * 100) / 100;
+  };
+  $('iSacs').oninput = autoMontant; $('iPrix').oninput = autoMontant;
+  $('iProd').onchange = () => { // propose le dernier prix du produit
+    const last = sorted(db.ops).find(o => o.type === 'in' && o.produit === $('iProd').value && o.prix);
+    if (last && !$('iPrix').value) { $('iPrix').value = last.prix; autoMontant(); }
+  };
+  $('saveIn').onclick = () => {
+    const montant = parseFloat($('iMontant').value), sacs = parseFloat($('iSacs').value) || 0, prix = parseFloat($('iPrix').value) || 0;
+    if (!(montant > 0)) return $('ierr').textContent = 'Dkhel montant s7i7.';
+    if (!$('iMotif').value.trim()) return $('ierr').textContent = 'Kteb l motif (mnin jat lflos).';
+    db.ops.push({ id: uid(), ts: Date.now(), type: 'in', date: $('iDate').value || today(), motif: $('iMotif').value.trim(),
+      produit: $('iProd').value.trim(), sacs, prix, montant, note: $('iNote').value.trim(), user: me.id });
+    save(); toast('Entrée tsajlat ✔'); go('home');
+  };
+
+  // ---------- sortie ----------
+  function resetOut() {
+    fillLists();
+    $('oDate').value = today(); ['oMotif', 'oMontant', 'oNote', 'oPass'].forEach(i => $(i).value = ''); $('oerr').textContent = '';
+  }
+  $('saveOut').onclick = async () => {
+    const montant = parseFloat($('oMontant').value);
+    if (!(montant > 0)) return $('oerr').textContent = 'Dkhel montant s7i7.';
+    if (!$('oMotif').value.trim()) return $('oerr').textContent = 'Kteb l motif (3lach khrjat).';
+    if (!(await checkPass(me, $('oPass').value))) return $('oerr').textContent = 'Mot de passe ghalat.';
+    db.ops.push({ id: uid(), ts: Date.now(), type: 'out', date: $('oDate').value || today(), motif: $('oMotif').value.trim(),
+      montant, note: $('oNote').value.trim(), user: me.id });
+    save(); toast('Sortie tsajlat ✔'); go('home');
+  };
+
+  // ---------- historique ----------
+  let hf = 'all';
+  document.querySelectorAll('#hFilter button').forEach(b => b.onclick = () => {
+    hf = b.dataset.f; document.querySelectorAll('#hFilter button').forEach(x => x.classList.toggle('on', x === b)); renderHist();
+  });
+  $('hFrom').onchange = $('hTo').onchange = renderHist;
+  function renderHist() {
+    const from = $('hFrom').value, to = $('hTo').value;
+    const ops = sorted(db.ops).filter(o => (hf === 'all' || o.type === hf) && (!from || o.date >= from) && (!to || o.date <= to));
+    const tin = ops.filter(o => o.type === 'in').reduce((s, o) => s + o.montant, 0);
+    const tout = ops.filter(o => o.type === 'out').reduce((s, o) => s + o.montant, 0);
+    $('hist').innerHTML = (ops.length ? `<div class="hint" style="margin-bottom:6px">${ops.length} opérations · <span class="in">+${dh(tin)}</span> · <span class="out">−${dh(tout)}</span></div>` + ops.map(o => itemHtml(o, true)).join('') : '<div class="empty">Walo.</div>');
+  }
+  $('hist').onclick = async e => {
+    const id = e.target.dataset && e.target.dataset.del; if (!id) return;
+    const pw = prompt('Bach tmse7 had l\'opération, dkhel mot de passe dyalek:');
+    if (pw === null) return;
+    if (!(await checkPass(me, pw))) return toast('Mot de passe ghalat');
+    db.ops = db.ops.filter(o => o.id !== id); save(); renderHist(); toast('Tmse7at');
+  };
+
+  // ---------- réglages ----------
+  $('chgPass').onclick = async () => {
+    if (!(await checkPass(me, $('cOld').value))) return $('cerr').textContent = 'Mot de passe l9dim ghalat.';
+    if ($('cNew').value.length < 4) return $('cerr').textContent = '4 7orof 3la l9al.';
+    me.salt = uid(); me.hash = await hash($('cNew').value, me.salt); save();
+    $('cOld').value = $('cNew').value = ''; $('cerr').textContent = ''; toast('Mot de passe tbdel ✔');
+  };
+  function download(name, text, type) {
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+  $('expCsv').onclick = () => {
+    const q = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
+    const rows = [['Date', 'Type', 'Motif', 'Produit', 'Sacs', 'Prix/sac', 'Montant', 'User', 'Note']]
+      .concat(sorted(db.ops).reverse().map(o => [o.date, o.type === 'in' ? 'Entrée' : 'Sortie', o.motif, o.produit || '', o.sacs || '', o.prix || '', (o.type === 'in' ? 1 : -1) * o.montant, userName(o.user), o.note || '']));
+    download('guvae-' + today() + '.csv', '﻿' + rows.map(r => r.map(q).join(';')).join('\r\n'), 'text/csv');
+  };
+  $('expJson').onclick = () => download('guvae-sauvegarde-' + today() + '.json', JSON.stringify(db), 'application/json');
+  $('impJson').onclick = () => $('impFile').click();
+  $('impFile').onchange = async e => {
+    const f = e.target.files[0]; if (!f) return;
+    try {
+      const d = JSON.parse(await f.text());
+      if (!Array.isArray(d.users) || !Array.isArray(d.ops)) throw 0;
+      if (!confirm('Had chi ghadi ibdel ga3 lbyanat li f telephone b dyal l fichier. Mtfa9?')) return;
+      db = d; save(); sessionStorage.removeItem('guvae-me'); me = null; toast('Restauré ✔'); startLogin();
+    } catch { toast('Fichier machi s7i7'); }
+    e.target.value = '';
+  };
+  $('logout').onclick = () => { sessionStorage.removeItem('guvae-me'); me = null; startLogin(); };
+
+  // ---------- démarrage ----------
+  load();
+  if (db.users.length < 2) show('setup');
+  else {
+    const sid = sessionStorage.getItem('guvae-me');
+    me = db.users.find(u => u.id === sid) || null;
+    me ? enterApp() : startLogin();
+  }
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
+})();
+</script>
+</body>
+</html>
