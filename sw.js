@@ -1,4 +1,4 @@
-const CACHE = 'guvae-v10';
+const CACHE = 'guvae-v11';
 const FILES = ['./', './index.html', './config.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './favicon.png'];
 
 self.addEventListener('install', e => {
