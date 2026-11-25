@@ -112,19 +112,6 @@ nav button.on svg{stroke:var(--accent)}
 .amount input{width:1.2ch;min-width:.7em;max-width:80vw;border:0;background:none;outline:0;text-align:center;font-size:56px;font-weight:500;letter-spacing:-.02em;padding:0;font-variant-numeric:tabular-nums}
 .amount input::placeholder{color:var(--muted);opacity:.5}
 .amount span{font-size:22px;color:var(--muted)}
-.estimate{display:flex;align-items:center;justify-content:center;gap:8px;margin:-16px auto 24px;padding:8px 14px;width:max-content;max-width:100%;
-  background:var(--sand);border-radius:40px;font-size:14px;color:var(--text)}
-.estimate b{font-weight:600}
-.estimate span{color:var(--muted);font-size:12px}
-.estimate svg{width:16px;height:16px;stroke:var(--accent);stroke-width:1.6;fill:none}
-.sacs-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;padding-top:14px;border-top:1px solid rgba(18,18,22,.08)}
-.sacs-row .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500}
-.sacs-row b{font-size:19px;font-weight:500}
-.sacs-row small{font-size:13px;color:var(--muted);font-weight:400;margin-left:4px}
-.row input{width:90px;height:36px;border:1px solid var(--input);border-radius:5px;background:var(--fill);text-align:right;padding:0 10px;font-size:16px;outline:0}
-.row input:focus{border-color:var(--accent)}
-.row .unit{color:var(--muted);font-size:14px;margin-left:6px}
-.hint{font-size:13px;color:var(--muted);margin:-18px 4px 26px}
 .field{width:100%;height:50px;border:1px solid var(--input);border-radius:5px;background:var(--fill);padding:0 16px;font-size:17px;outline:0;transition:border-color .15s}
 .field:focus{border-color:var(--accent)}
 .mlabel{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 10px}
@@ -212,7 +199,6 @@ nav button.on svg{stroke:var(--accent)}
           <div><span class="k">Entrées ce mois</span><b style="color:var(--in)" id="mIn">0</b></div>
           <div><span class="k">Sorties ce mois</span><b style="color:var(--out)" id="mOut">0</b></div>
         </div>
-        <div class="sacs-row"><span class="k">Sacs vendus ce mois (SENDIT)</span><b id="mSacs">≈ 0<small>sacs</small></b></div>
       </div>
       <div class="actions">
         <button class="act in" data-add="in"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Entrée</button>
@@ -238,12 +224,6 @@ nav button.on svg{stroke:var(--accent)}
       <h1 class="page-title">Compte</h1>
       <div class="label">Sécurité</div>
       <div class="group"><button class="row" id="chgPass">Changer le mot de passe<span class="chev">›</span></button></div>
-      <div class="label">Calcul des sacs</div>
-      <div class="group">
-        <label class="row">Prix d’un sac<span><input id="sPrix" type="text" inputmode="decimal"><span class="unit">DH</span></span></label>
-        <label class="row">Livraison moyenne<span><input id="sLiv" type="text" inputmode="decimal"><span class="unit">DH</span></span></label>
-      </div>
-      <p class="hint" id="sHint"></p>
       <div class="label">Données</div>
       <div class="group">
         <button class="row" id="expCsv">Exporter vers Excel<span class="chev">›</span></button>
@@ -266,7 +246,6 @@ nav button.on svg{stroke:var(--accent)}
   <div class="grabber"></div>
   <div class="sheet-head"><button id="cancel">Annuler</button><h3 id="sheetTitle">Entrée</h3><span style="width:60px"></span></div>
   <label class="amount"><input id="fAmount" type="text" inputmode="decimal" placeholder="0" autocomplete="off"><span>DH</span></label>
-  <div class="estimate hidden" id="fEstimate"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg><b id="fEstN"></b><span id="fEstD"></span></div>
   <div class="mlabel">Motif</div>
   <div class="motifs" id="motifs">
     <button data-m="ADS">ADS</button><button data-m="SENDIT">SENDIT</button><button data-m="autre">Autre</button>
@@ -361,7 +340,7 @@ document.addEventListener('click', e => { const b = e.target.closest('[data-go]'
 const opTime = o => o.ts ? new Date(o.ts).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : '';
 const itemHtml = o => `<div class="item press" data-id="${o.id}">
     <div class="dot ${o.type}">${ICON[o.type]}</div>
-    <div class="t"><div>${esc(o.motif || (o.type === 'in' ? 'Entrée' : 'Sortie'))}</div><div class="s">${[opTime(o), esc(o.user), isSendit(o) ? sacsTxt(sacsOf(+o.montant || 0)) : ''].filter(Boolean).join(' · ')}</div></div>
+    <div class="t"><div>${esc(o.motif || (o.type === 'in' ? 'Entrée' : 'Sortie'))}</div><div class="s">${[opTime(o), esc(o.user)].filter(Boolean).join(' · ')}</div></div>
     <div class="m ${o.type}">${o.type === 'in' ? '+' : '−'}${fmt(o.montant)}</div></div>`;
 function dayLabel(d) {
   if (d === today()) return "Aujourd'hui";
@@ -374,15 +353,6 @@ function grouped(list) {
   return html;
 }
 
-// ---------- calcul des sacs (SENDIT) ----------
-const SAC_KEY = 'guvae-sac';
-let sac = { prix: 299, livraison: 40 };
-try { sac = { ...sac, ...JSON.parse(localStorage.getItem(SAC_KEY) || '{}') }; } catch {}
-const netSac = () => Math.max(1, sac.prix - sac.livraison);
-const isSendit = o => o.type === 'in' && String(o.motif || '').toUpperCase() === 'SENDIT';
-const sacsOf = montant => montant / netSac();
-const sacsTxt = n => '≈ ' + fmt(Math.round(n)) + (Math.round(n) === 1 ? ' sac' : ' sacs');
-
 // ---------- accueil ----------
 function renderHome() {
   const sum = (l, t) => l.filter(o => o.type === t).reduce((s, o) => s + (+o.montant || 0), 0);
@@ -392,8 +362,6 @@ function renderHome() {
   $('balance').classList.toggle('neg', bal < 0);
   $('mIn').textContent = '+' + fmt(sum(month, 'in'));
   $('mOut').textContent = '−' + fmt(sum(month, 'out'));
-  const nSacs = month.filter(isSendit).reduce((s, o) => s + sacsOf(+o.montant || 0), 0);
-  $('mSacs').innerHTML = '≈ ' + fmt(Math.round(nSacs)) + '<small>' + (Math.round(nSacs) === 1 ? 'sac' : 'sacs') + '</small>';
   const rec = ops.slice(0, 5);
   $('recent').innerHTML = rec.length ? grouped(rec) : '<div class="empty"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg><p>Aucune opération</p><span>Touchez « Entrée » ou « Sortie » pour commencer.</span></div>';
 }
@@ -435,7 +403,7 @@ function openSheet(t) {
   $('sheetTitle').textContent = t === 'in' ? 'Entrée' : 'Sortie';
   $('fSave').className = 'primary' + (t === 'out' ? ' out' : '');
   $('fAmount').value = ''; $('fMotif').value = ''; $('ferr').textContent = ''; fitAmount();
-  pickMotif(null, false); updateEstimate();
+  pickMotif(null, false);
   $('scrim').classList.add('open'); $('sheet').classList.add('open');
   setTimeout(() => $('fAmount').focus(), 60);
 }
@@ -449,16 +417,9 @@ function pickMotif(m, focus = true) {
   $('fMotif').classList.toggle('hidden', m !== 'autre');
   if (m === 'autre' && focus) $('fMotif').focus(); else if (m) document.activeElement.blur();
   $('ferr').textContent = '';
-  updateEstimate();
-}
-function updateEstimate() {
-  const m = parseFloat($('fAmount').value);
-  const on = mode === 'in' && motifSel === 'SENDIT' && m > 0;
-  $('fEstimate').classList.toggle('hidden', !on);
-  if (on) { $('fEstN').textContent = sacsTxt(sacsOf(m)); $('fEstD').textContent = `${fmt(netSac())} DH net / sac`; }
 }
 $('motifs').onclick = e => { const b = e.target.closest('[data-m]'); if (b) { haptic(); pickMotif(b.dataset.m); } };
-$('fAmount').oninput = e => { e.target.value = e.target.value.replace(',', '.').replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1'); fitAmount(); updateEstimate(); };
+$('fAmount').oninput = e => { e.target.value = e.target.value.replace(',', '.').replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1'); fitAmount(); };
 $('fAmount').onkeydown = e => { if (e.key === 'Enter') e.target.blur(); };
 $('fMotif').onkeydown = e => { if (e.key === 'Enter') $('fSave').click(); };
 $('fSave').onclick = () => {
@@ -508,17 +469,6 @@ $('migBtn').onclick = async () => {
 };
 
 // ---------- compte ----------
-function renderSac() {
-  $('sPrix').value = sac.prix; $('sLiv').value = sac.livraison;
-  $('sHint').textContent = `SENDIT : chaque sac rapporte environ ${fmt(netSac())} DH (${fmt(sac.prix)} − ${fmt(sac.livraison)} de livraison).`;
-}
-['sPrix', 'sLiv'].forEach(id => $(id).onchange = () => {
-  const prix = parseFloat($('sPrix').value.replace(',', '.')), liv = parseFloat($('sLiv').value.replace(',', '.'));
-  if (prix > 0 && liv >= 0 && liv < prix) { sac = { prix, livraison: liv }; try { localStorage.setItem(SAC_KEY, JSON.stringify(sac)); } catch {} toast('Calcul mis à jour'); }
-  else toast('Valeurs invalides');
-  renderSac(); renderHome(); renderHist();
-});
-renderSac();
 $('chgPass').onclick = async () => {
   if (!(await reauth('Mot de passe actuel :'))) return;
   const nw = prompt('Nouveau mot de passe (6 caractères min.) :'); if (nw === null) return;
