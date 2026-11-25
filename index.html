@@ -34,8 +34,7 @@ input{font:inherit;color:inherit}
 .hidden{display:none!important}
 
 /* ---------- barre du haut ---------- */
-.topbar{background:#121216;color:#fff;font-size:11px;letter-spacing:.18em;text-transform:uppercase;text-align:center;padding:calc(env(safe-area-inset-top) + 7px) 16px 7px}
-header{position:sticky;top:0;z-index:10;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;
+header{position:sticky;top:0;z-index:10;padding:calc(env(safe-area-inset-top) + 12px) 20px 12px;display:flex;align-items:center;justify-content:space-between;
   background:var(--bar);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid var(--line)}
 .logo{height:26px;display:block}
 .wordmark{font-size:24px;letter-spacing:.02em;margin:0;font-weight:400}
@@ -179,7 +178,6 @@ nav button.on svg{stroke:var(--accent)}
 
 <!-- ===== App ===== -->
 <div id="app" class="hidden">
-  <div class="topbar">Portez votre histoire</div>
   <header>
     <img class="logo light" src="https://guvae.com/cdn/shop/files/Guvae_logosite.png?width=280" alt="Guvae" onerror="this.outerHTML='<p class=wordmark>Guvae</p>'">
     <span class="who"><span class="sync" id="sync" title="Synchronisation"></span><span id="who"></span></span>
