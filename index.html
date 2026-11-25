@@ -3,242 +3,245 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#121216">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121216" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="guvae">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Guvae">
 <meta name="robots" content="noindex, nofollow">
 <title>Guvae Caisse</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon.svg">
+<!-- Futura : native sur iPhone/Mac ; Jost (clone de Futura) seulement si Futura n'existe pas (Android) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#ffffff; --soft:#f4f4f4; --card:#ffffff; --text:#121216; --muted:#6b6b6b; --line:#e2e2e2;
-  --brand:#121216; --brand-ink:#ffffff; --accent:#b4693a; --taupe:#ad9484; --sand:#efe6dc;
-  --in:#2f6b4c; --in-bg:#e6efe8; --out:#b4693a; --out-bg:#f6e9e0;
-  --serif:"the season","DM Serif Display",Georgia,serif; --sans:"futura-pt","Jost",system-ui,sans-serif;
+  --font: Futura, "Futura PT", "futura-pt", "Jost", sans-serif;
+  --bg:#ffffff; --fill:#f4f4f4; --fill-2:#ebebeb; --text:#121216; --muted:#8a8a8e; --line:rgba(18,18,22,.08);
+  --accent:#b4693a; --in:#2f7a52; --out:#b4693a;
+  --bar:rgba(255,255,255,.72); --scrim:rgba(0,0,0,.28); --sheet:#ffffff;
 }
 @media (prefers-color-scheme: dark){
-  :root{ --bg:#121216; --soft:#1c1c21; --card:#18181d; --text:#f3eee8; --muted:#a39d96; --line:#2c2c33;
-    --brand:#f3eee8; --brand-ink:#121216; --accent:#d08a5c; --taupe:#ad9484; --sand:#26221f;
-    --in:#8cc4a2; --in-bg:#1c2a22; --out:#d99a70; --out-bg:#2e2119; }
+  :root{ --bg:#121216; --fill:#1d1d22; --fill-2:#26262c; --text:#f3eee8; --muted:#8e8a86; --line:rgba(255,255,255,.08);
+    --accent:#d08a5c; --in:#7cc49a; --out:#d99a70; --bar:rgba(18,18,22,.72); --scrim:rgba(0,0,0,.55); --sheet:#1a1a1f; }
 }
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.6 var(--sans)}
-body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
-.topbar{background:#121216;color:#fff;font-size:11px;letter-spacing:.15em;text-transform:uppercase;text-align:center;padding:7px 16px}
-header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
-header .logo-img{height:26px;display:block}
-.dark-only{display:none!important}
-@media (prefers-color-scheme: dark){ .light-only{display:none!important} .dark-only{display:block!important} }
-.wordmark{font-family:var(--serif);font-size:26px;letter-spacing:.02em;margin:0}
-header .who{font-size:12px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
-main{max-width:640px;margin:0 auto;padding:18px 16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px;margin-bottom:14px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{background:var(--soft);border-radius:4px;padding:14px}
-.stat .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.2em;font-weight:500}
-.stat .v{font-size:21px;font-weight:500;margin-top:4px;font-variant-numeric:tabular-nums}
-.stat.big{grid-column:1/-1;background:var(--sand);padding:20px}
-.stat.big .l{color:var(--accent);font-weight:600}
-.stat.big .v{font-family:var(--serif);font-size:38px;font-weight:400;line-height:1.2}
-.in{color:var(--in)} .out{color:var(--out)}
-label{display:block;font-size:11px;color:var(--muted);margin:14px 0 6px;text-transform:uppercase;letter-spacing:.15em;font-weight:500}
-input,select,textarea{width:100%;height:50px;padding:0 14px;border:1px solid var(--line);border-radius:5px;background:var(--soft);color:var(--text);font:inherit}
-input:focus,select:focus{outline:1px solid var(--accent);border-color:var(--accent)}
-.row{display:flex;gap:10px}.row>*{flex:1;min-width:0}
-button{font:inherit;border:0;cursor:pointer}
-.btn{display:block;width:100%;margin-top:18px;background:var(--brand);color:var(--brand-ink);border:1px solid var(--brand);border-radius:40px;padding:16px 24px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:background .2s,color .2s}
-.btn:active{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn.out-b{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn.ghost{background:transparent;color:var(--text);border-color:var(--line)}
-.seg{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
-.seg button{background:transparent;border:1px solid var(--line);border-radius:40px;color:var(--text);padding:7px 11px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
-.seg button.on{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
-nav{position:fixed;bottom:0;left:0;right:0;background:var(--bg);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:5}
-nav button{flex:1;background:none;color:var(--muted);padding:10px 2px 8px;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
-nav button svg{display:block;margin:0 auto 3px;width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.5}
-nav button.on{color:var(--accent);font-weight:600}
-.item{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
-.item:last-child{border-bottom:0}
-.item .m{font-weight:500;white-space:nowrap;font-variant-numeric:tabular-nums}
-.item .d{font-size:13px;color:var(--muted)}
-.item .del{background:none;color:var(--muted);padding:4px 0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;text-decoration:underline}
-.empty{color:var(--muted);text-align:center;padding:20px 0}
-.hint{font-size:13px;color:var(--muted)}
-.err{color:#ec523e;font-size:14px;min-height:20px;margin-top:8px}
-.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#121216;color:#fff;padding:10px 18px;border-radius:40px;font-size:13px;letter-spacing:.05em;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20}
-.toast.show{opacity:1}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.45 var(--font);-webkit-font-smoothing:antialiased}
+body{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
+input{font:inherit;color:inherit}
 .hidden{display:none!important}
-.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;
-  background:linear-gradient(115deg,#d9c6ae 0%,#efe3d3 30%,#cdb595 31%,#e8d9c4 55%,#c9ae8b 56%,#ead9c2 80%,#d4bc9c 100%)}
-.login .card{width:100%;max-width:380px;border:0;box-shadow:0 20px 60px rgba(18,18,22,.15)}
-.login .wordmark{text-align:center;font-size:44px}
-.tag{text-align:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 6px}
-h2{margin:0 0 6px;font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.3}
-.sub{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0 0 2px}
-.pill{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:40px;margin-left:6px;vertical-align:middle}
-.pill.in{background:var(--in-bg)}.pill.out{background:var(--out-bg)}
+
+/* ---------- barre du haut ---------- */
+header{position:sticky;top:0;z-index:10;padding:calc(env(safe-area-inset-top) + 10px) 20px 10px;display:flex;align-items:center;justify-content:space-between;
+  background:var(--bar);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%)}
+.logo{height:24px;display:block}
+.logo.dark{display:none}
+@media (prefers-color-scheme: dark){ .logo.light{display:none} .logo.dark{display:block} }
+.wordmark{font-size:24px;letter-spacing:.02em;margin:0;font-weight:400}
+.who{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+main{max-width:560px;margin:0 auto;padding:8px 20px 20px}
+
+/* ---------- solde ---------- */
+.hero{padding:28px 0 22px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.balance{font-size:52px;line-height:1.05;letter-spacing:-.02em;font-weight:500;margin-top:6px;font-variant-numeric:tabular-nums}
+.balance small{font-size:22px;letter-spacing:0;color:var(--muted);font-weight:400;margin-left:4px}
+.balance.neg{color:var(--out)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.duo div{background:var(--fill);border-radius:16px;padding:14px 16px}
+.duo b{display:block;font-size:20px;font-weight:500;margin-top:2px;font-variant-numeric:tabular-nums}
+
+/* ---------- gros boutons ---------- */
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 28px}
+.act{height:58px;border-radius:29px;font-size:16px;font-weight:500;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:transform .1s ease-out, opacity .1s ease-out}
+.act:active,.press:active{transform:scale(.97);opacity:.85}
+.act.in{background:var(--text);color:var(--bg)}
+.act.out{background:var(--fill);color:var(--text)}
+.act svg{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none}
+
+/* ---------- liste ---------- */
+.section-title{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 6px}
+.section-title h2{font-size:20px;font-weight:500;margin:0;letter-spacing:-.01em}
+.link{color:var(--accent);font-size:15px}
+.day{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:18px 0 2px}
+.item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);position:relative}
+.item:last-child{border-bottom:0}
+.dot{width:36px;height:36px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;background:var(--fill)}
+.dot svg{width:16px;height:16px;stroke-width:2;fill:none}
+.dot.in svg{stroke:var(--in)} .dot.out svg{stroke:var(--out)}
+.item .t{flex:1;min-width:0}
+.item .t div:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item .s{font-size:13px;color:var(--muted)}
+.item .m{font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+.item .m.in{color:var(--in)}
+.item .del{position:absolute;right:0;top:50%;transform:translateY(-50%);background:#e5484d;color:#fff;font-size:14px;padding:8px 14px;border-radius:18px}
+.empty{color:var(--muted);text-align:center;padding:36px 0;font-size:15px}
+
+/* ---------- segmented ---------- */
+.seg{display:flex;background:var(--fill);border-radius:10px;padding:2px;margin:12px 0 4px}
+.seg button{flex:1;padding:7px 0;font-size:14px;border-radius:8px;color:var(--muted);transition:background .2s,color .2s}
+.seg button.on{background:var(--bg);color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+@media (prefers-color-scheme: dark){ .seg button.on{background:var(--fill-2)} }
+
+/* ---------- tab bar ---------- */
+nav{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;padding:6px 0 calc(6px + env(safe-area-inset-bottom));
+  background:var(--bar);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-top:1px solid var(--line)}
+nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;letter-spacing:.06em;color:var(--muted);padding:4px 0}
+nav svg{width:24px;height:24px;stroke:currentColor;stroke-width:1.6;fill:none}
+nav button.on{color:var(--accent)}
+
+/* ---------- feuille (sheet) ---------- */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:20;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.scrim.open{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:21;background:var(--sheet);border-radius:22px 22px 0 0;
+  padding:8px 20px calc(20px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto;
+  transform:translateY(105%);transition:transform .42s cubic-bezier(.2,.9,.25,1)}
+.sheet.open{transform:translateY(0)}
+.grabber{width:36px;height:5px;border-radius:3px;background:var(--fill-2);margin:0 auto 14px}
+.sheet-head{display:flex;justify-content:space-between;align-items:center}
+.sheet-head h3{margin:0;font-size:17px;font-weight:500}
+.sheet-head button{color:var(--muted);font-size:16px}
+.amount{display:flex;align-items:baseline;justify-content:center;gap:6px;margin:26px 0 18px}
+.amount input{width:1.2ch;min-width:.7em;max-width:80vw;border:0;background:none;outline:0;text-align:center;font-size:56px;font-weight:500;letter-spacing:-.02em;padding:0;font-variant-numeric:tabular-nums}
+.amount input::placeholder{color:var(--muted);opacity:.5}
+.amount span{font-size:22px;color:var(--muted)}
+.field{width:100%;height:54px;border:0;border-radius:14px;background:var(--fill);padding:0 16px;font-size:17px;outline:0;transition:box-shadow .15s}
+.field:focus{box-shadow:0 0 0 2px var(--accent)}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:10px -20px 0;padding:0 20px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;background:var(--fill);border-radius:16px;padding:6px 12px;font-size:14px;color:var(--text)}
+.primary{width:100%;height:56px;border-radius:28px;margin-top:20px;background:var(--text);color:var(--bg);font-size:16px;font-weight:500;letter-spacing:.04em;transition:transform .1s ease-out,opacity .1s}
+.primary:active{transform:scale(.97);opacity:.85}
+.primary.out{background:var(--accent);color:#fff}
+.err{color:#e5484d;font-size:14px;min-height:20px;margin-top:8px;text-align:center}
+
+/* ---------- compte ---------- */
+.group{background:var(--fill);border-radius:14px;overflow:hidden;margin:8px 0 26px}
+.row{display:flex;align-items:center;justify-content:space-between;width:100%;padding:15px 16px;text-align:left;border-bottom:1px solid var(--line);font-size:17px}
+.row:last-child{border-bottom:0}
+.row:active{background:var(--fill-2)}
+.row .chev{color:var(--muted)}
+.row.danger{color:#e5484d}
+.label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:22px 4px 0}
+
+/* ---------- connexion ---------- */
+.auth{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:24px;max-width:420px;margin:0 auto}
+.auth .wordmark{font-size:48px;text-align:center}
+.auth .sub{text-align:center;color:var(--muted);font-size:15px;margin:6px 0 30px}
+.auth .field{margin-top:10px}
+.users{display:flex;gap:10px}
+.users button{flex:1;height:54px;border-radius:14px;background:var(--fill);font-size:16px}
+.users button.on{background:var(--text);color:var(--bg)}
+
+.toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 12px);transform:translate(-50%,-150%);z-index:30;background:var(--text);color:var(--bg);
+  padding:10px 18px;border-radius:22px;font-size:15px;transition:transform .4s cubic-bezier(.2,.9,.25,1)}
+.toast.show{transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion: reduce){
+  .sheet,.toast{transition:opacity .2s ease}
+  .sheet{transform:none;opacity:0;pointer-events:none}.sheet.open{opacity:1;pointer-events:auto}
+  .toast{transform:translate(-50%,0);opacity:0}.toast.show{opacity:1}
+}
+@media (prefers-reduced-transparency: reduce){ header,nav{background:var(--bg);backdrop-filter:none;-webkit-backdrop-filter:none} }
 </style>
 </head>
 <body>
 
-<!-- ============ SETUP (awel mra) ============ -->
-<section id="setup" class="login hidden">
-  <div class="card">
-    <p class="tag">Gestion de caisse</p><p class="wordmark">Guvae</p>
-    <p class="hint" style="text-align:center">Awel mra: dkhel smiya o mot de passe dyal 2 users.</p>
-    <h2 style="margin-top:14px">User 1</h2>
-    <input id="su1" placeholder="Smiya" autocomplete="off">
-    <input id="sp1" type="password" placeholder="Mot de passe" style="margin-top:8px">
-    <h2 style="margin-top:14px">User 2</h2>
-    <input id="su2" placeholder="Smiya" autocomplete="off">
-    <input id="sp2" type="password" placeholder="Mot de passe" style="margin-top:8px">
-    <div class="err" id="serr"></div>
-    <button class="btn" id="setupBtn">Enregistrer</button>
-  </div>
+<!-- ===== Premier lancement ===== -->
+<section id="setup" class="auth hidden">
+  <p class="wordmark">Guvae</p>
+  <p class="sub">Créez les 2 comptes</p>
+  <input class="field" id="su1" placeholder="Nom utilisateur 1" autocomplete="off">
+  <input class="field" id="sp1" type="password" placeholder="Mot de passe">
+  <div style="height:16px"></div>
+  <input class="field" id="su2" placeholder="Nom utilisateur 2" autocomplete="off">
+  <input class="field" id="sp2" type="password" placeholder="Mot de passe">
+  <div class="err" id="serr"></div>
+  <button class="primary" id="setupBtn">Continuer</button>
 </section>
 
-<!-- ============ LOGIN ============ -->
-<section id="login" class="login hidden">
-  <div class="card">
-    <p class="tag">Gestion de caisse</p><p class="wordmark">Guvae</p>
-    <label>Utilisateur</label>
-    <select id="lu"></select>
-    <label>Mot de passe</label>
-    <input id="lp" type="password" autocomplete="current-password">
-    <div class="err" id="lerr"></div>
-    <button class="btn" id="loginBtn">Dkhol</button>
-  </div>
+<!-- ===== Connexion ===== -->
+<section id="login" class="auth hidden">
+  <p class="wordmark">Guvae</p>
+  <p class="sub">Qui êtes-vous ?</p>
+  <div class="users" id="users"></div>
+  <input class="field" id="lp" type="password" placeholder="Mot de passe" autocomplete="current-password" style="margin-top:12px">
+  <div class="err" id="lerr"></div>
+  <button class="primary" id="loginBtn">Se connecter</button>
 </section>
 
-<!-- ============ APP ============ -->
+<!-- ===== App ===== -->
 <div id="app" class="hidden">
-  <div class="topbar">Portez votre histoire</div>
   <header>
-    <img class="logo-img light-only" src="https://guvae.com/cdn/shop/files/Guvae_logosite.png?width=280" alt="Guvae" onerror="this.replaceWith(Object.assign(document.createElement('p'),{className:'wordmark',textContent:'Guvae'}))">
-    <img class="logo-img dark-only" src="https://guvae.com/cdn/shop/files/Guvae_logo_white.png?width=280" alt="Guvae" onerror="this.replaceWith(Object.assign(document.createElement('p'),{className:'wordmark',textContent:'Guvae'}))">
+    <img class="logo light" src="https://guvae.com/cdn/shop/files/Guvae_logosite.png?width=280" alt="Guvae" onerror="this.outerHTML='<p class=wordmark>Guvae</p>'">
+    <img class="logo dark" src="https://guvae.com/cdn/shop/files/Guvae_logo_white.png?width=280" alt="Guvae" onerror="this.remove()">
     <span class="who" id="who"></span>
   </header>
+
   <main>
-
-    <!-- Tableau de bord -->
     <section id="v-home">
-      <div class="seg" id="period">
-        <button data-p="day">Lyoum</button>
-        <button data-p="week">7 jours</button>
-        <button data-p="month" class="on">Had chhar</button>
-        <button data-p="all">Kolchi</button>
-      </div>
-      <div class="grid">
-        <div class="stat big"><div class="l">Solde (baqi f caisse)</div><div class="v" id="sSolde">0 DH</div></div>
-        <div class="stat"><div class="l">Entrées</div><div class="v in" id="sIn">0</div></div>
-        <div class="stat"><div class="l">Sorties</div><div class="v out" id="sOut">0</div></div>
-        <div class="stat"><div class="l">Sacs tba3o</div><div class="v" id="sSacs">0</div></div>
-        <div class="stat"><div class="l">Moyenne / sac</div><div class="v" id="sAvg">—</div></div>
-      </div>
-      <div class="card" style="margin-top:14px">
-        <h2>Sacs 3la 7sab l'produit</h2>
-        <div id="byProd"></div>
-      </div>
-      <div class="card">
-        <h2>Akhir l'opérations</h2>
-        <div id="recent"></div>
-      </div>
-    </section>
-
-    <!-- Entrée -->
-    <section id="v-in" class="hidden">
-      <div class="card">
-        <p class="sub">Entrée</p><h2>Flos dkhlat</h2>
-        <label>Date</label>
-        <input id="iDate" type="date">
-        <label>Motif (mnin jat)</label>
-        <input id="iMotif" list="motifsIn" placeholder="ex: Bi3 sacs, client Ahmed...">
-        <datalist id="motifsIn"></datalist>
-        <label>Produit</label>
-        <input id="iProd" list="prods" placeholder="ex: Sac Tote, Sac Bandoulière...">
-        <datalist id="prods"></datalist>
-        <div class="row">
-          <div><label>Nombre de sacs</label><input id="iSacs" type="number" inputmode="numeric" min="0" step="1" placeholder="0"></div>
-          <div><label>Prix / sac (DH)</label><input id="iPrix" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0"></div>
+      <div class="hero">
+        <div class="eyebrow">Solde</div>
+        <div class="balance" id="balance">0<small>DH</small></div>
+        <div class="duo">
+          <div><span class="eyebrow">Entrées · mois</span><b class="in" style="color:var(--in)" id="mIn">0</b></div>
+          <div><span class="eyebrow">Sorties · mois</span><b style="color:var(--out)" id="mOut">0</b></div>
         </div>
-        <label>Montant total (DH)</label>
-        <input id="iMontant" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0">
-        <p class="hint">Ila dkhlti sacs o prix, l'montant kayt7seb wa7do. T9der tbdlo.</p>
-        <label>Note (ikhtiyari)</label>
-        <input id="iNote">
-        <div class="err" id="ierr"></div>
-        <button class="btn in-b" id="saveIn">Enregistrer l'entrée</button>
       </div>
+      <div class="actions">
+        <button class="act in" data-add="in"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Entrée</button>
+        <button class="act out" data-add="out"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg>Sortie</button>
+      </div>
+      <div class="section-title"><h2>Récent</h2><button class="link" data-go="hist">Tout voir</button></div>
+      <div id="recent"></div>
     </section>
 
-    <!-- Sortie -->
-    <section id="v-out" class="hidden">
-      <div class="card">
-        <p class="sub">Sortie</p><h2>Flos khrjat</h2>
-        <label>Date</label>
-        <input id="oDate" type="date">
-        <label>Motif (3lach khrjat)</label>
-        <input id="oMotif" list="motifsOut" placeholder="ex: Chri sel3a, livraison, pub...">
-        <datalist id="motifsOut"></datalist>
-        <label>Montant (DH)</label>
-        <input id="oMontant" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0">
-        <label>Note (ikhtiyari)</label>
-        <input id="oNote">
-        <label>Confirmer b mot de passe dyalek</label>
-        <input id="oPass" type="password" autocomplete="current-password">
-        <div class="err" id="oerr"></div>
-        <button class="btn out-b" id="saveOut">Enregistrer la sortie</button>
-        <p class="hint">Kat tsjjel b smiyt: <b id="oWho"></b></p>
-      </div>
-    </section>
-
-    <!-- Historique -->
     <section id="v-hist" class="hidden">
+      <div class="hero" style="padding-bottom:6px"><div class="balance" style="font-size:34px">Historique</div></div>
       <div class="seg" id="hFilter">
-        <button data-f="all" class="on">Kolchi</button>
-        <button data-f="in">Entrées</button>
-        <button data-f="out">Sorties</button>
+        <button data-f="all" class="on">Tout</button><button data-f="in">Entrées</button><button data-f="out">Sorties</button>
       </div>
-      <div class="row" style="margin-bottom:12px">
-        <input id="hFrom" type="date" title="Mn">
-        <input id="hTo" type="date" title="7ta">
-      </div>
-      <div class="card"><div id="hist"></div></div>
+      <div id="hist"></div>
     </section>
 
-    <!-- Réglages -->
     <section id="v-set" class="hidden">
-      <div class="card">
-        <h2>Bdel mot de passe</h2>
-        <label>Mot de passe l9dim</label><input id="cOld" type="password">
-        <label>Mot de passe jdid</label><input id="cNew" type="password">
-        <div class="err" id="cerr"></div>
-        <button class="btn" id="chgPass">Bdel</button>
+      <div class="hero" style="padding-bottom:6px"><div class="balance" style="font-size:34px">Compte</div></div>
+      <div class="label">Sécurité</div>
+      <div class="group"><button class="row" id="chgPass">Changer le mot de passe<span class="chev">›</span></button></div>
+      <div class="label">Données</div>
+      <div class="group">
+        <button class="row" id="expCsv">Exporter vers Excel<span class="chev">›</span></button>
+        <button class="row" id="expJson">Sauvegarder<span class="chev">›</span></button>
+        <button class="row" id="impJson">Restaurer<span class="chev">›</span></button>
       </div>
-      <div class="card">
-        <h2>Sauvegarde</h2>
-        <p class="hint">Lbyanat kayb9aw ghir f had telephone. Dir sauvegarde mn wqt l wqt.</p>
-        <button class="btn ghost" id="expCsv">Exporter Excel (CSV)</button>
-        <button class="btn ghost" id="expJson">Sauvegarder (fichier .json)</button>
-        <button class="btn ghost" id="impJson">Restaurer mn fichier</button>
-        <input id="impFile" type="file" accept=".json,application/json" class="hidden">
-      </div>
-      <button class="btn ghost" id="logout">Khrej (déconnexion)</button>
+      <input id="impFile" type="file" accept=".json,application/json" class="hidden">
+      <div class="group"><button class="row danger" id="logout">Se déconnecter</button></div>
     </section>
-
   </main>
+
   <nav>
-    <button data-v="home" class="on"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9H3z"/></svg>Accueil</button>
-    <button data-v="in"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Entrée</button>
-    <button data-v="out"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>Sortie</button>
-    <button data-v="hist"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Historique</button>
-    <button data-v="set"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>Compte</button>
+    <button data-go="home" class="on"><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20H4z"/></svg>Accueil</button>
+    <button data-go="hist"><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h9"/></svg>Historique</button>
+    <button data-go="set"><svg viewBox="0 0 24 24"><path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>Compte</button>
   </nav>
+</div>
+
+<!-- ===== Feuille d'ajout ===== -->
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true">
+  <div class="grabber"></div>
+  <div class="sheet-head"><button id="cancel">Annuler</button><h3 id="sheetTitle">Entrée</h3><span style="width:60px"></span></div>
+  <label class="amount"><input id="fAmount" type="text" inputmode="decimal" placeholder="0" autocomplete="off"><span>DH</span></label>
+  <input class="field" id="fMotif" placeholder="Motif" autocomplete="off" enterkeyhint="done">
+  <div class="chips" id="chips"></div>
+  <div class="err" id="ferr"></div>
+  <button class="primary" id="fSave">Enregistrer</button>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -247,191 +250,178 @@ h2{margin:0 0 6px;font-family:var(--serif);font-weight:400;font-size:24px;line-h
 (() => {
   const KEY = 'guvae-data-v1';
   const $ = id => document.getElementById(id);
-  const fmt = n => (Math.round(n * 100) / 100).toLocaleString('fr-FR', {minimumFractionDigits: 0, maximumFractionDigits: 2});
-  const dh = n => fmt(n) + ' DH';
-  const today = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); };
+  const fmt = n => (Math.round(n * 100) / 100).toLocaleString('fr-FR', {maximumFractionDigits: 2});
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  const isoDay = d => { d = new Date(d); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); };
+  const today = () => isoDay(Date.now());
+  const ICON = {
+    in: '<svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg>',
+    out: '<svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg>'
+  };
 
   // ---------- stockage ----------
   let db;
-  function load() {
-    try { db = JSON.parse(localStorage.getItem(KEY)) || null; } catch { db = null; }
-    if (!db) db = { users: [], ops: [] };
-  }
-  function save() { localStorage.setItem(KEY, JSON.stringify(db)); }
+  try { db = JSON.parse(localStorage.getItem(KEY)); } catch { db = null; }
+  if (!db || !Array.isArray(db.users)) db = { users: [], ops: [] };
+  const save = () => localStorage.setItem(KEY, JSON.stringify(db));
 
-  // ---------- mot de passe (haché) ----------
+  // ---------- mots de passe ----------
   async function hash(pw, salt) {
     const data = new TextEncoder().encode(salt + ':' + pw);
-    if (crypto.subtle) {
-      const buf = await crypto.subtle.digest('SHA-256', data);
-      return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
-    }
+    if (crypto.subtle) return [...new Uint8Array(await crypto.subtle.digest('SHA-256', data))].map(b => b.toString(16).padStart(2, '0')).join('');
     let h = 2166136261; for (const b of data) { h ^= b; h = Math.imul(h, 16777619); } return 'f' + (h >>> 0).toString(16);
   }
-  async function checkPass(user, pw) { return user && (await hash(pw, user.salt)) === user.hash; }
+  const checkPass = async (u, pw) => !!u && (await hash(pw, u.salt)) === u.hash;
 
-  let me = null;
-  const toast = msg => { const t = $('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 1800); };
+  let me = null, toastT;
+  const toast = m => { const t = $('toast'); t.textContent = m; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 1800); };
+  const haptic = () => { try { navigator.vibrate && navigator.vibrate(10); } catch {} };
+  const show = id => ['setup', 'login', 'app'].forEach(x => $(x).classList.toggle('hidden', x !== id));
 
-  function show(id) { ['setup', 'login', 'app'].forEach(x => $(x).classList.toggle('hidden', x !== id)); }
-
-  // ---------- setup ----------
+  // ---------- premier lancement ----------
   $('setupBtn').onclick = async () => {
     const u = [[$('su1').value.trim(), $('sp1').value], [$('su2').value.trim(), $('sp2').value]];
-    if (u.some(([n, p]) => !n || p.length < 4)) return $('serr').textContent = 'Khas smiya o mot de passe (4 7orof 3la l9al) l kol user.';
-    if (u[0][0].toLowerCase() === u[1][0].toLowerCase()) return $('serr').textContent = 'Smiyat khashom ikono mkhtalfin.';
+    if (u.some(([n, p]) => !n || p.length < 4)) return $('serr').textContent = 'Nom et mot de passe (4 caractères min.) pour chaque compte.';
+    if (u[0][0].toLowerCase() === u[1][0].toLowerCase()) return $('serr').textContent = 'Les deux noms doivent être différents.';
     db.users = [];
     for (const [name, pw] of u) { const salt = uid(); db.users.push({ id: uid(), name, salt, hash: await hash(pw, salt) }); }
-    save(); toast('Users tsajlo ✔'); startLogin();
+    save(); startLogin();
   };
 
-  // ---------- login ----------
+  // ---------- connexion ----------
+  let pick = null;
   function startLogin() {
-    $('lu').innerHTML = db.users.map(u => `<option value="${u.id}">${esc(u.name)}</option>`).join('');
+    pick = pick || db.users[0].id;
+    $('users').innerHTML = db.users.map(u => `<button class="press ${u.id === pick ? 'on' : ''}" data-u="${u.id}">${esc(u.name)}</button>`).join('');
     $('lp').value = ''; $('lerr').textContent = '';
-    show('login'); setTimeout(() => $('lp').focus(), 50);
+    show('login');
   }
+  $('users').onclick = e => { const b = e.target.closest('[data-u]'); if (!b) return; pick = b.dataset.u; startLogin(); $('lp').focus(); };
   async function doLogin() {
-    const u = db.users.find(x => x.id === $('lu').value);
-    if (!(await checkPass(u, $('lp').value))) return $('lerr').textContent = 'Mot de passe ghalat.';
+    const u = db.users.find(x => x.id === pick);
+    if (!(await checkPass(u, $('lp').value))) { haptic(); return $('lerr').textContent = 'Mot de passe incorrect.'; }
     me = u; sessionStorage.setItem('guvae-me', u.id); enterApp();
   }
   $('loginBtn').onclick = doLogin;
   $('lp').onkeydown = e => { if (e.key === 'Enter') doLogin(); };
-
-  function enterApp() {
-    $('who').textContent = me.name; $('oWho').textContent = me.name;
-    show('app'); go('home');
-  }
+  function enterApp() { $('who').textContent = me.name; show('app'); go('home'); }
 
   // ---------- navigation ----------
   function go(v) {
-    document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
-    ['home', 'in', 'out', 'hist', 'set'].forEach(x => $('v-' + x).classList.toggle('hidden', x !== v));
-    if (v === 'home') renderHome();
-    if (v === 'in') resetIn();
-    if (v === 'out') resetOut();
-    if (v === 'hist') renderHist();
+    document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.go === v));
+    ['home', 'hist', 'set'].forEach(x => $('v-' + x).classList.toggle('hidden', x !== v));
+    v === 'home' ? renderHome() : v === 'hist' ? renderHist() : 0;
     window.scrollTo(0, 0);
   }
-  document.querySelectorAll('nav button').forEach(b => b.onclick = () => go(b.dataset.v));
+  document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) go(b.dataset.go); });
 
-  // ---------- helpers ----------
+  // ---------- liste ----------
   const userName = id => (db.users.find(u => u.id === id) || {}).name || '?';
-  function fillLists() {
-    const uniq = arr => [...new Set(arr.filter(Boolean))].sort();
-    $('motifsIn').innerHTML = uniq(db.ops.filter(o => o.type === 'in').map(o => o.motif)).map(m => `<option value="${esc(m)}">`).join('');
-    $('motifsOut').innerHTML = uniq(db.ops.filter(o => o.type === 'out').map(o => o.motif)).map(m => `<option value="${esc(m)}">`).join('');
-    $('prods').innerHTML = uniq(db.ops.map(o => o.produit)).map(m => `<option value="${esc(m)}">`).join('');
+  const opTime = o => o.ts ? new Date(o.ts).toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'}) : '';
+  const sorted = ops => [...ops].sort((a, b) => (b.date + String(b.ts).padStart(15, '0')).localeCompare(a.date + String(a.ts).padStart(15, '0')));
+  const itemHtml = o => `<div class="item press" data-id="${o.id}">
+      <div class="dot ${o.type}">${ICON[o.type]}</div>
+      <div class="t"><div>${esc(o.motif || (o.type === 'in' ? 'Entrée' : 'Sortie'))}</div><div class="s">${[opTime(o), esc(userName(o.user))].filter(Boolean).join(' · ')}</div></div>
+      <div class="m ${o.type}">${o.type === 'in' ? '+' : '−'}${fmt(o.montant)}</div></div>`;
+  function dayLabel(d) {
+    const t = today(), y = isoDay(Date.now() - 864e5);
+    if (d === t) return "Aujourd'hui";
+    if (d === y) return 'Hier';
+    return new Date(d + 'T12:00').toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric', month: 'long'});
   }
-  function itemHtml(o, canDelete) {
-    const isIn = o.type === 'in';
-    const sub = [o.date, isIn && o.sacs ? `${o.sacs} sacs${o.produit ? ' ' + esc(o.produit) : ''}${o.prix ? ' × ' + fmt(o.prix) : ''}` : '', 'par ' + esc(userName(o.user)), o.note ? esc(o.note) : ''].filter(Boolean).join(' · ');
-    return `<div class="item"><div><div>${esc(o.motif || (isIn ? 'Entrée' : 'Sortie'))}<span class="pill ${o.type}">${isIn ? 'entrée' : 'sortie'}</span></div><div class="d">${sub}</div></div>
-      <div style="text-align:right"><div class="m ${o.type}">${isIn ? '+' : '−'}${dh(o.montant)}</div>${canDelete ? `<button class="del" data-del="${o.id}">supprimer</button>` : ''}</div></div>`;
+  function grouped(ops) {
+    let html = '', last = '';
+    for (const o of ops) { if (o.date !== last) { html += `<div class="day">${dayLabel(o.date)}</div>`; last = o.date; } html += itemHtml(o); }
+    return html;
   }
-  const sorted = ops => [...ops].sort((a, b) => (b.date + b.ts).localeCompare(a.date + a.ts));
 
   // ---------- accueil ----------
-  let period = 'month';
-  document.querySelectorAll('#period button').forEach(b => b.onclick = () => {
-    period = b.dataset.p; document.querySelectorAll('#period button').forEach(x => x.classList.toggle('on', x === b)); renderHome();
-  });
-  function inPeriod(o) {
-    if (period === 'all') return true;
-    const t = today();
-    if (period === 'day') return o.date === t;
-    if (period === 'month') return o.date.slice(0, 7) === t.slice(0, 7);
-    const d = new Date(t); d.setDate(d.getDate() - 6); return o.date >= d.toISOString().slice(0, 10);
-  }
   function renderHome() {
-    const all = db.ops;
-    const solde = all.reduce((s, o) => s + (o.type === 'in' ? o.montant : -o.montant), 0);
-    const ops = all.filter(inPeriod);
-    const tin = ops.filter(o => o.type === 'in').reduce((s, o) => s + o.montant, 0);
-    const tout = ops.filter(o => o.type === 'out').reduce((s, o) => s + o.montant, 0);
-    const sacsOps = ops.filter(o => o.type === 'in' && o.sacs > 0);
-    const sacs = sacsOps.reduce((s, o) => s + o.sacs, 0);
-    const sacsMoney = sacsOps.reduce((s, o) => s + o.montant, 0);
-    $('sSolde').textContent = dh(solde); $('sSolde').className = 'v ' + (solde < 0 ? 'out' : '');
-    $('sIn').textContent = dh(tin); $('sOut').textContent = dh(tout);
-    $('sSacs').textContent = fmt(sacs);
-    $('sAvg').textContent = sacs ? dh(sacsMoney / sacs) : '—';
-    const by = {};
-    sacsOps.forEach(o => { const k = o.produit || 'Bla produit'; by[k] = by[k] || { s: 0, m: 0 }; by[k].s += o.sacs; by[k].m += o.montant; });
-    const keys = Object.keys(by).sort((a, b) => by[b].s - by[a].s);
-    $('byProd').innerHTML = keys.length ? keys.map(k => `<div class="item"><div>${esc(k)}<div class="d">${dh(by[k].m)}</div></div><div class="m">${fmt(by[k].s)} sacs</div></div>`).join('') : '<div class="empty">Ma tba3 7ta sac f had l\'période.</div>';
-    const rec = sorted(all).slice(0, 6);
-    $('recent').innerHTML = rec.length ? rec.map(o => itemHtml(o, false)).join('') : '<div class="empty">Mazal ma kayn 7ta opération.</div>';
+    const sum = (ops, t) => ops.filter(o => o.type === t).reduce((s, o) => s + o.montant, 0);
+    const bal = sum(db.ops, 'in') - sum(db.ops, 'out');
+    const month = db.ops.filter(o => o.date.slice(0, 7) === today().slice(0, 7));
+    $('balance').innerHTML = (bal < 0 ? '−' : '') + fmt(Math.abs(bal)) + '<small>DH</small>';
+    $('balance').classList.toggle('neg', bal < 0);
+    $('mIn').textContent = '+' + fmt(sum(month, 'in'));
+    $('mOut').textContent = '−' + fmt(sum(month, 'out'));
+    const rec = sorted(db.ops).slice(0, 5);
+    $('recent').innerHTML = rec.length ? grouped(rec) : '<div class="empty">Aucune opération pour le moment.</div>';
   }
-
-  // ---------- entrée ----------
-  function resetIn() {
-    fillLists();
-    $('iDate').value = today(); ['iMotif', 'iProd', 'iSacs', 'iPrix', 'iMontant', 'iNote'].forEach(i => $(i).value = ''); $('ierr').textContent = '';
-  }
-  const autoMontant = () => {
-    const s = parseFloat($('iSacs').value), p = parseFloat($('iPrix').value);
-    if (s > 0 && p > 0) $('iMontant').value = Math.round(s * p * 100) / 100;
-  };
-  $('iSacs').oninput = autoMontant; $('iPrix').oninput = autoMontant;
-  $('iProd').onchange = () => { // propose le dernier prix du produit
-    const last = sorted(db.ops).find(o => o.type === 'in' && o.produit === $('iProd').value && o.prix);
-    if (last && !$('iPrix').value) { $('iPrix').value = last.prix; autoMontant(); }
-  };
-  $('saveIn').onclick = () => {
-    const montant = parseFloat($('iMontant').value), sacs = parseFloat($('iSacs').value) || 0, prix = parseFloat($('iPrix').value) || 0;
-    if (!(montant > 0)) return $('ierr').textContent = 'Dkhel montant s7i7.';
-    if (!$('iMotif').value.trim()) return $('ierr').textContent = 'Kteb l motif (mnin jat lflos).';
-    db.ops.push({ id: uid(), ts: Date.now(), type: 'in', date: $('iDate').value || today(), motif: $('iMotif').value.trim(),
-      produit: $('iProd').value.trim(), sacs, prix, montant, note: $('iNote').value.trim(), user: me.id });
-    save(); toast('Entrée tsajlat ✔'); go('home');
-  };
-
-  // ---------- sortie ----------
-  function resetOut() {
-    fillLists();
-    $('oDate').value = today(); ['oMotif', 'oMontant', 'oNote', 'oPass'].forEach(i => $(i).value = ''); $('oerr').textContent = '';
-  }
-  $('saveOut').onclick = async () => {
-    const montant = parseFloat($('oMontant').value);
-    if (!(montant > 0)) return $('oerr').textContent = 'Dkhel montant s7i7.';
-    if (!$('oMotif').value.trim()) return $('oerr').textContent = 'Kteb l motif (3lach khrjat).';
-    if (!(await checkPass(me, $('oPass').value))) return $('oerr').textContent = 'Mot de passe ghalat.';
-    db.ops.push({ id: uid(), ts: Date.now(), type: 'out', date: $('oDate').value || today(), motif: $('oMotif').value.trim(),
-      montant, note: $('oNote').value.trim(), user: me.id });
-    save(); toast('Sortie tsajlat ✔'); go('home');
-  };
 
   // ---------- historique ----------
   let hf = 'all';
-  document.querySelectorAll('#hFilter button').forEach(b => b.onclick = () => {
-    hf = b.dataset.f; document.querySelectorAll('#hFilter button').forEach(x => x.classList.toggle('on', x === b)); renderHist();
-  });
-  $('hFrom').onchange = $('hTo').onchange = renderHist;
+  $('hFilter').onclick = e => {
+    const b = e.target.closest('[data-f]'); if (!b) return;
+    hf = b.dataset.f; [...$('hFilter').children].forEach(x => x.classList.toggle('on', x === b)); renderHist();
+  };
   function renderHist() {
-    const from = $('hFrom').value, to = $('hTo').value;
-    const ops = sorted(db.ops).filter(o => (hf === 'all' || o.type === hf) && (!from || o.date >= from) && (!to || o.date <= to));
-    const tin = ops.filter(o => o.type === 'in').reduce((s, o) => s + o.montant, 0);
-    const tout = ops.filter(o => o.type === 'out').reduce((s, o) => s + o.montant, 0);
-    $('hist').innerHTML = (ops.length ? `<div class="hint" style="margin-bottom:6px">${ops.length} opérations · <span class="in">+${dh(tin)}</span> · <span class="out">−${dh(tout)}</span></div>` + ops.map(o => itemHtml(o, true)).join('') : '<div class="empty">Walo.</div>');
+    const ops = sorted(db.ops).filter(o => hf === 'all' || o.type === hf);
+    $('hist').innerHTML = ops.length ? grouped(ops) : '<div class="empty">Rien ici.</div>';
   }
-  $('hist').onclick = async e => {
-    const id = e.target.dataset && e.target.dataset.del; if (!id) return;
-    const pw = prompt('Bach tmse7 had l\'opération, dkhel mot de passe dyalek:');
-    if (pw === null) return;
-    if (!(await checkPass(me, pw))) return toast('Mot de passe ghalat');
-    db.ops = db.ops.filter(o => o.id !== id); save(); renderHist(); toast('Tmse7at');
+  // toucher une ligne → bouton Supprimer ; toucher Supprimer → mot de passe
+  document.addEventListener('click', async e => {
+    const del = e.target.closest('.del');
+    if (del) {
+      const id = del.parentElement.dataset.id;
+      const pw = prompt('Mot de passe pour supprimer :'); if (pw === null) return;
+      if (!(await checkPass(me, pw))) { haptic(); return toast('Mot de passe incorrect'); }
+      db.ops = db.ops.filter(o => o.id !== id); save(); renderHome(); renderHist(); toast('Supprimé'); return;
+    }
+    document.querySelectorAll('.item .del').forEach(x => x.remove());
+    const it = e.target.closest('.item');
+    if (it && !it.querySelector('.del')) it.insertAdjacentHTML('beforeend', '<button class="del">Supprimer</button>');
+  });
+
+  // ---------- feuille d'ajout ----------
+  let mode = 'in';
+  function openSheet(t) {
+    mode = t;
+    $('sheetTitle').textContent = t === 'in' ? 'Entrée' : 'Sortie';
+    $('fSave').className = 'primary' + (t === 'out' ? ' out' : '');
+    $('fAmount').value = ''; $('fMotif').value = ''; $('ferr').textContent = ''; fitAmount();
+    const counts = {};
+    db.ops.filter(o => o.type === t && o.motif).forEach(o => counts[o.motif] = (counts[o.motif] || 0) + 1);
+    $('chips').innerHTML = Object.keys(counts).sort((a, b) => counts[b] - counts[a]).slice(0, 8).map(m => `<button class="press" data-m="${esc(m)}">${esc(m)}</button>`).join('');
+    $('scrim').classList.add('open'); $('sheet').classList.add('open');
+    setTimeout(() => $('fAmount').focus(), 60);
+  }
+  function closeSheet() { $('scrim').classList.remove('open'); $('sheet').classList.remove('open'); document.activeElement.blur(); }
+  document.querySelectorAll('[data-add]').forEach(b => b.onclick = () => openSheet(b.dataset.add));
+  $('scrim').onclick = closeSheet; $('cancel').onclick = closeSheet;
+  $('chips').onclick = e => { const b = e.target.closest('[data-m]'); if (b) $('fMotif').value = b.dataset.m; };
+  const fitAmount = () => { const el = $('fAmount'); el.style.width = (Math.max(1, el.value.length) * 0.56 + 0.08) + 'em'; };
+  $('fAmount').oninput = e => { e.target.value = e.target.value.replace(',', '.').replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1'); fitAmount(); };
+  $('fAmount').onkeydown = e => { if (e.key === 'Enter') $('fMotif').focus(); };
+  $('fMotif').onkeydown = e => { if (e.key === 'Enter') $('fSave').click(); };
+  $('fSave').onclick = () => {
+    const montant = parseFloat($('fAmount').value), motif = $('fMotif').value.trim();
+    if (!(montant > 0)) { haptic(); return $('ferr').textContent = 'Entrez un montant.'; }
+    if (!motif) { haptic(); return $('ferr').textContent = 'Entrez un motif.'; }
+    db.ops.push({ id: uid(), ts: Date.now(), type: mode, date: today(), motif, montant, user: me.id });
+    save(); haptic(); closeSheet(); renderHome(); toast(mode === 'in' ? 'Entrée enregistrée' : 'Sortie enregistrée');
   };
 
-  // ---------- réglages ----------
+  // glisser la feuille vers le bas pour fermer (suit le doigt 1:1)
+  (() => {
+    const s = $('sheet'); let y0 = null, dy = 0, t0 = 0;
+    s.addEventListener('pointerdown', e => { if (e.target.closest('input,button')) return; y0 = e.clientY; t0 = e.timeStamp; dy = 0; s.style.transition = 'none'; s.setPointerCapture(e.pointerId); });
+    s.addEventListener('pointermove', e => { if (y0 === null) return; dy = e.clientY - y0; s.style.transform = `translateY(${dy > 0 ? dy : dy / 6}px)`; });
+    const end = e => {
+      if (y0 === null) return; const v = dy / Math.max(1, e.timeStamp - t0) * 1000; y0 = null;
+      s.style.transition = ''; s.style.transform = '';
+      if (dy + v * 0.15 > s.offsetHeight * 0.35) closeSheet();
+    };
+    s.addEventListener('pointerup', end); s.addEventListener('pointercancel', end);
+  })();
+
+  // ---------- compte ----------
   $('chgPass').onclick = async () => {
-    if (!(await checkPass(me, $('cOld').value))) return $('cerr').textContent = 'Mot de passe l9dim ghalat.';
-    if ($('cNew').value.length < 4) return $('cerr').textContent = '4 7orof 3la l9al.';
-    me.salt = uid(); me.hash = await hash($('cNew').value, me.salt); save();
-    $('cOld').value = $('cNew').value = ''; $('cerr').textContent = ''; toast('Mot de passe tbdel ✔');
+    const old = prompt('Mot de passe actuel :'); if (old === null) return;
+    if (!(await checkPass(me, old))) return toast('Mot de passe incorrect');
+    const nw = prompt('Nouveau mot de passe (4 caractères min.) :'); if (nw === null) return;
+    if (nw.length < 4) return toast('Trop court');
+    me.salt = uid(); me.hash = await hash(nw, me.salt); save(); toast('Mot de passe changé');
   };
   function download(name, text, type) {
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; a.click();
@@ -439,8 +429,8 @@ h2{margin:0 0 6px;font-family:var(--serif);font-weight:400;font-size:24px;line-h
   }
   $('expCsv').onclick = () => {
     const q = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
-    const rows = [['Date', 'Type', 'Motif', 'Produit', 'Sacs', 'Prix/sac', 'Montant', 'User', 'Note']]
-      .concat(sorted(db.ops).reverse().map(o => [o.date, o.type === 'in' ? 'Entrée' : 'Sortie', o.motif, o.produit || '', o.sacs || '', o.prix || '', (o.type === 'in' ? 1 : -1) * o.montant, userName(o.user), o.note || '']));
+    const rows = [['Date', 'Heure', 'Type', 'Motif', 'Montant', 'Utilisateur']].concat(sorted(db.ops).reverse().map(o =>
+      [o.date, opTime(o), o.type === 'in' ? 'Entrée' : 'Sortie', o.motif, (o.type === 'in' ? 1 : -1) * o.montant, userName(o.user)]));
     download('guvae-' + today() + '.csv', '﻿' + rows.map(r => r.map(q).join(';')).join('\r\n'), 'text/csv');
   };
   $('expJson').onclick = () => download('guvae-sauvegarde-' + today() + '.json', JSON.stringify(db), 'application/json');
@@ -450,21 +440,16 @@ h2{margin:0 0 6px;font-family:var(--serif);font-weight:400;font-size:24px;line-h
     try {
       const d = JSON.parse(await f.text());
       if (!Array.isArray(d.users) || !Array.isArray(d.ops)) throw 0;
-      if (!confirm('Had chi ghadi ibdel ga3 lbyanat li f telephone b dyal l fichier. Mtfa9?')) return;
-      db = d; save(); sessionStorage.removeItem('guvae-me'); me = null; toast('Restauré ✔'); startLogin();
-    } catch { toast('Fichier machi s7i7'); }
+      if (!confirm('Remplacer toutes les données de ce téléphone par celles du fichier ?')) return;
+      db = d; save(); sessionStorage.removeItem('guvae-me'); me = null; pick = null; toast('Restauré'); startLogin();
+    } catch { toast('Fichier invalide'); }
     e.target.value = '';
   };
   $('logout').onclick = () => { sessionStorage.removeItem('guvae-me'); me = null; startLogin(); };
 
   // ---------- démarrage ----------
-  load();
   if (db.users.length < 2) show('setup');
-  else {
-    const sid = sessionStorage.getItem('guvae-me');
-    me = db.users.find(u => u.id === sid) || null;
-    me ? enterApp() : startLogin();
-  }
+  else { me = db.users.find(u => u.id === sessionStorage.getItem('guvae-me')) || null; me ? enterApp() : startLogin(); }
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
 })();
 </script>
